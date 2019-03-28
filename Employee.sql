@@ -24,3 +24,5 @@ INSERT INTO Employee VALUES (7, 'John', 'Stanmore','Male',80000);
 select * from Employee;
 
 drop table Employee;
+
+{"ID":"8", "FirstName":"Sam", "LastName":"Witch","Gender":"Male","Salary":54000}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>API</title>
+
+	<!-- Latest compiled and minified CSS & JS -->
+	<link rel="stylesheet" href="./assets/css/bootstrap.css"> 
+	<script src="./assets/js/jquery-1.10.2.js"></script>
+	<script src="./assets/js/bootstrap.min.js"></script>
+	<script src="scripts/angular.min.js"></script>
+
+</head>
+<script>
+	var app = angular.module("myModule",[]);
+
+	app.controller('mycontroller', function($scope,$http){
+		
+		
+		GetAll();
+
+		function GetAll(){
+
+			$http.get("http://localhost:55971/api/employee").then(function(response) {
+				$scope.articles = response.data;
+			});
+
+		}
+
+		$scope.Luu = function(article){
+
+			 	$http.post("http://5b178bb8f5c9b70014551244.mockapi.io/api/articles", article).then(function(response) {
+			 	alert("Add successfully");
+			 	GetAll();	
+			 });	
+		}
+		
+		$scope.getById = function(id){
+
+			$http.get("http://5b178bb8f5c9b70014551244.mockapi.io/api/articles/" + id).then(function(response) {
+				$scope.art = response.data;
+			});
+		}
+
+		$scope.Update = function(article){
+
+				
+
+			 $http.put("http://5b178bb8f5c9b70014551244.mockapi.io/api/articles/" + article.id, article).then(function(response) {
+			 	alert("Update successfully");
+			 	GetAll();	
+			 });	
+
+		}
+
+		$scope.deleteById = function(id){
+			
+			$http.delete("http://5b178bb8f5c9b70014551244.mockapi.io/api/articles/" + id).then(function(response) {
+				alert("Remove successfully");
+				GetAll();	
+			});	
+
+		};	
+
+	});
+
+</script>
+<body ng-app="myModule">
+	<div class="container" ng-controller="mycontroller">
+		<br/><br/>
+		<input class="form-group" ng-model="article.name" type="text" placeholder="Name" name="">
+		<input class="form-group" ng-model="article.unit" type="text" placeholder="Unit" name="">
+		<button ng-click="Luu(article);" class="btn btn-success btn-sm">Save</button>
+		<br>
+		<br>
+		<input class="form-group" disabled ng-model="art.id" type="text" placeholder="Id" name="">
+		<input class="form-group" ng-model="art.name" type="text" placeholder="Name" name="">
+		<input class="form-group" ng-model="art.unit" type="text" placeholder="Unit" name="">
+		<button ng-click="Update(art);" class="btn btn-success btn-sm">Update</button>
+		<br>
+		<table class="table table-bordered">
+
+			<thead>
+				<td>ID</td>
+				<td>FIRSTName</td>
+				<td>LASTNAME</td>
+				<td>GENDER</td>
+				<td>SALARY</td>
+				<td>FUNCTION</td>
+			</thead>
+			<tr ng-repeat="article in articles">
+				<td>{{article.ID}}</td>
+				<td>{{article.FIRSTNAME}}</td>
+				<td>{{article.LASTNAME}}</td>
+				<td>{{article.GENDER}}</td>
+				<td>{{article.SALARY}}</td>
+				<td><button ng-click="deleteById(article.id);" class="btn btn-warning">Delete</button>
+				<button ng-click="getById(article.id);" class="btn btn-warning">Edit</button>
+				</td>
+
+			</tr>
+		</table>
+	</div>
+
+</body>
+</html>

@@ -71,8 +71,11 @@
                     },
                     success: function (response) {
                        
-                            $('#divErrorText').text( JSON.stringify(response));
-                            $('#divError').show('fade');
+                            //$('#divErrorText').text( JSON.stringify(response));
+                        // $('#divError').show('fade');
+                        sessionStorage.setItem('accessToken', response.access_token);
+                        window.location.href = "Data.html";
+
                         
                     },
                     error: function (jqXHR) {
